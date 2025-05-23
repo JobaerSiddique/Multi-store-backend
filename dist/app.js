@@ -15,7 +15,7 @@ app.use((0, cors_1.default)());
 app.use((0, cookie_parser_1.default)());
 app.use('/api/v1', routes_1.default);
 app.get('/', (req, res) => {
-    res.send('Hurry brother-shop is running');
+    res.send('Hurry brother-shop is running yeaha');
 });
 app.use(globalErrorhandler_1.default);
 app.use(notFound_1.default);

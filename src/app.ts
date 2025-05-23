@@ -12,7 +12,7 @@ app.use(cookieParser())
 
 app.use('/api/v1',router)
 app.get('/', (req, res) => {
-  res.send('Hurry brother-shop is running')
+  res.send('Hurry brother-shop is running yeaha')
 })
 
 app.use(globalErrorHandler)
