@@ -23,7 +23,12 @@ const userSchema = new Schema<IUser, {}, IUserMethods>({
     storeAddress: {
       type: String,
       required: function() { return this.role === 'wholesale_customer'; }
-    }
+    },
+    isDeleted:{
+      type:Boolean,
+      default:false
+    },
+
   }, { timestamps: true });
   
   userSchema.methods.comparePassword = async function (password: string): Promise<boolean> {

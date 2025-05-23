@@ -37,7 +37,11 @@ const userSchema = new mongoose_1.Schema({
     storeAddress: {
         type: String,
         required: function () { return this.role === 'wholesale_customer'; }
-    }
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
+    },
 }, { timestamps: true });
 userSchema.methods.comparePassword = function (password) {
     return __awaiter(this, void 0, void 0, function* () {
