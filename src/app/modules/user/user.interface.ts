@@ -8,6 +8,7 @@ export interface IUser extends Document {
   phone?: string;
   address?: string;
   isActive: boolean;
+  isDeleted:boolean;
   creditLimit?: number;
   dueAmount?: number;
   storeName?: string;        // Added for wholesale users
