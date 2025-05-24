@@ -65,10 +65,21 @@ const getAllUserIntoDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_model_1.User.find();
     return user;
 });
+const deleteUserIntoDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_model_1.User.findById(id);
+    if (!user) {
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "User Not Found");
+    }
+    const deleteUser = yield user_model_1.User.findByIdAndUpdate({
+        _id: user._id
+    }, { isDeleted: true });
+    return deleteUser;
+});
 exports.UserService = {
     createUserDB,
     createAdminDB,
     getAllUserIntoDB,
     createLocalUserFromDB,
-    createWholerIntoDB
+    createWholerIntoDB,
+    deleteUserIntoDB
 };

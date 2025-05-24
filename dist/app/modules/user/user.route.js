@@ -12,4 +12,5 @@ router.post('/createAdmin', user_controller_1.UserController.createAdmin);
 router.post('/createLocal', user_controller_1.UserController.createLocalUser);
 router.post('/createWhole', user_controller_1.UserController.createWholerSeller);
 router.get('/user', user_controller_1.UserController.getAllUser);
+router.delete('/user/:id', user_controller_1.UserController.deleteUser);
 exports.UserRoute = router;

@@ -64,10 +64,23 @@ const createWholerSeller = catchAsync(async(req,res)=>{
 
     })
 })
+
+const deleteUser = catchAsync(async(req,res)=>{
+    const {id} =req.params;
+    const result = await UserService.deleteUserIntoDB(id);
+    sendResponse(res,{
+        statusCode:httpStatus.OK,
+        success:true,
+        message:"Deleted User successfully",
+        data:result
+
+    })
+})
 export const UserController = {
     createUser,
     createAdmin,
     getAllUser,
     createLocalUser,
-    createWholerSeller
+    createWholerSeller,
+    deleteUser
 }

@@ -82,10 +82,25 @@ const getAllUserIntoDB = async()=>{
     const user = await User.find()
     return user;
 }
+
+const deleteUserIntoDB = async(id:string)=>{
+    const user = await User.findById(id);
+
+    if(!user){
+        throw new AppError(httpStatus.NOT_FOUND,"User Not Found")
+    }
+
+    const deleteUser = await User.findByIdAndUpdate({
+        _id:user._id},{isDeleted:true}
+    )
+
+    return deleteUser;
+}
 export const UserService={
     createUserDB,
     createAdminDB,
     getAllUserIntoDB,
     createLocalUserFromDB,
-    createWholerIntoDB
+    createWholerIntoDB,
+    deleteUserIntoDB
 }
