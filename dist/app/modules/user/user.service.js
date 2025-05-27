@@ -75,11 +75,27 @@ const deleteUserIntoDB = (id) => __awaiter(void 0, void 0, void 0, function* () 
     }, { isDeleted: true });
     return deleteUser;
 });
+const userStatusIntoDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_model_1.User.findById(id);
+    if (!user) {
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "User Not Found");
+    }
+    if (user.isDeleted) {
+        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "User Already Deleted");
+    }
+    else {
+        const userStatus = yield user_model_1.User.findByIdAndUpdate({
+            _id: user._id
+        }, { isActive: false });
+        return userStatus;
+    }
+});
 exports.UserService = {
     createUserDB,
     createAdminDB,
     getAllUserIntoDB,
     createLocalUserFromDB,
     createWholerIntoDB,
-    deleteUserIntoDB
+    deleteUserIntoDB,
+    userStatusIntoDB
 };

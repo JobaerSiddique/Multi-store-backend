@@ -47,49 +47,48 @@ const mongoose_1 = __importStar(require("mongoose"));
 const types_1 = require("../types");
 const generateOrderNumber_1 = require("../../helpers/generateOrderNumber");
 const orderSchema = new mongoose_1.Schema({
-    orderNumber: { type: String, required: true, unique: true },
+    orderNumber: { type: String, },
     user: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User', required: true },
-    items: [{
-            product: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Product', required: true },
-            quantity: { type: Number, required: true },
-            unit: { type: String },
-            price: { type: Number, required: true },
-        }],
     totalAmount: { type: Number, required: true },
-    orderType: {
+    paidAmount: { type: Number, default: 0 },
+    dueAmount: { type: Number, default: 0 },
+    paymentStatus: {
         type: String,
-        enum: Object.values(types_1.OrderType),
-        required: true
+        enum: Object.values(types_1.PaymentStatus),
+        default: types_1.PaymentStatus.PENDING
     },
     status: {
         type: String,
         enum: Object.values(types_1.OrderStatus),
         default: types_1.OrderStatus.PENDING
     },
-    paymentStatus: {
-        type: String,
-        enum: Object.values(types_1.PaymentStatus),
-        default: types_1.PaymentStatus.PENDING
-    },
-    paidAmount: { type: Number, default: 0 },
-    dueAmount: { type: Number, default: 0 },
-    deliveryDate: { type: Date },
-    notes: { type: String },
-}, { timestamps: true });
+    notes: String,
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
+}, {
+    timestamps: true,
+});
+// Pre-save hook for order number generation
 orderSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
-        // Skip if not a new order or orderNumber already exists
-        if (!this.isNew || this.orderNumber) {
+        if (!this.isNew || this.orderNumber)
             return next();
-        }
         try {
-            // Generate and assign orderNumber
             this.orderNumber = yield (0, generateOrderNumber_1.generateOrderNumber)(this.orderType);
             next();
         }
         catch (error) {
-            next(error); // Handle errors
+            next(error);
         }
     });
+});
+orderSchema.pre("save", function (next) {
+    if (this.paymentStatus === "PAID") {
+        this.dueAmount = 0;
+    }
+    else {
+        this.dueAmount = this.totalAmount;
+    }
+    next();
 });
 exports.Order = mongoose_1.default.model('Order', orderSchema);

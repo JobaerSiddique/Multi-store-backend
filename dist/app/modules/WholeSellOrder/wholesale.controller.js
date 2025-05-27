@@ -12,21 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OrderController = void 0;
+exports.WholeSaleController = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
-const order_service_1 = require("./order.service");
-const createWholeSaleOrder = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { orderData, wholesaleData } = req.body;
-    const result = yield order_service_1.OrderService.createWholeSaleOrderIntoDB(orderData, wholesaleData);
+const wholesale_service_1 = require("./wholesale.service");
+const getAllWholeSale = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield wholesale_service_1.WholeSaleService.getAllWholeSaleOrder();
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: "Whole Sale Order Create Successfully",
+        message: "Whole sale Retrived Successfully",
         data: result
     });
 }));
-exports.OrderController = {
-    createWholeSaleOrder
+exports.WholeSaleController = {
+    getAllWholeSale
 };

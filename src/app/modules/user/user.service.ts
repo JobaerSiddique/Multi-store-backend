@@ -96,11 +96,31 @@ const deleteUserIntoDB = async(id:string)=>{
 
     return deleteUser;
 }
+const userStatusIntoDB = async(id:string)=>{
+    const user = await User.findById(id);
+
+    if(!user){
+        throw new AppError(httpStatus.NOT_FOUND,"User Not Found")
+    }
+
+    if(user.isDeleted){
+         throw new AppError(httpStatus.BAD_REQUEST,"User Already Deleted")
+    } else{
+        const userStatus = await User.findByIdAndUpdate({
+        _id:user._id},{isActive:false}
+    )
+
+    return userStatus;
+    }
+
+    
+}
 export const UserService={
     createUserDB,
     createAdminDB,
     getAllUserIntoDB,
     createLocalUserFromDB,
     createWholerIntoDB,
-    deleteUserIntoDB
+    deleteUserIntoDB,
+    userStatusIntoDB
 }

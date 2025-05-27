@@ -11,6 +11,7 @@ router.post('/createLocal', UserController.createLocalUser)
 router.post('/createWhole', UserController.createWholerSeller)
 router.get('/user',UserController.getAllUser);
 router.delete('/user/:id',UserController.deleteUser);
+router.put('/user/:id',UserController.userStatus);
 
 
 export const UserRoute= router;

@@ -13,4 +13,5 @@ router.post('/createLocal', user_controller_1.UserController.createLocalUser);
 router.post('/createWhole', user_controller_1.UserController.createWholerSeller);
 router.get('/user', user_controller_1.UserController.getAllUser);
 router.delete('/user/:id', user_controller_1.UserController.deleteUser);
+router.put('/user/:id', user_controller_1.UserController.userStatus);
 exports.UserRoute = router;
