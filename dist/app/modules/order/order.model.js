@@ -63,6 +63,15 @@ const orderSchema = new mongoose_1.Schema({
         default: types_1.OrderStatus.PENDING
     },
     notes: String,
+    orderType: {
+        type: String,
+        enum: Object.values(types_1.OrderType),
+        required: true
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
+    },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 }, {

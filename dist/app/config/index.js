@@ -50,5 +50,12 @@ exports.default = {
     resetSecrect: process.env.resetSecrect,
     cloud_name: process.env.cloud_name,
     cloud_api: process.env.cloud_api,
-    cloud_secrect: process.env.cloud_secrect
+    cloud_secrect: process.env.cloud_secrect,
+    store_id: process.env.store_id,
+    store_pass: process.env.store_password,
+    store_url: process.env.store_url,
+    success_url: process.env.success_url,
+    ssl_store_id: process.env.ssl_store_id,
+    ssl_store_pass: process.env.ssl_store_pass,
+    ssl_store_url: process.env.ssl_store_url
 };

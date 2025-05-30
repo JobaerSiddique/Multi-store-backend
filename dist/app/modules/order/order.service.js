@@ -77,6 +77,9 @@ const createWholeSaleOrderIntoDB = (orderData, wholesaleData) => __awaiter(void 
     const session = yield mongoose_1.default.startSession();
     try {
         session.startTransaction();
+        if (orderData.orderType !== "WHOLESALE") {
+            throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "Order Type must be Whole sale ");
+        }
         // Step 1: Check for duplicate wholesale orders
         const existingWholesaleOrder = yield wholesell_model_1.WholeSale.findOne({
             "items.product": { $all: wholesaleData.items.map((item) => item.product) },

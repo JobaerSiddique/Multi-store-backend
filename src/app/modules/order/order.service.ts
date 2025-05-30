@@ -80,6 +80,9 @@ const createWholeSaleOrderIntoDB = async (orderData: IOrder, wholesaleData: IWho
 
   try {
     session.startTransaction();
+    if(orderData.orderType !=="WHOLESALE"){
+      throw new AppError(httpStatus.BAD_REQUEST,"Order Type must be Whole sale ")
+    }
 
     // Step 1: Check for duplicate wholesale orders
     const existingWholesaleOrder = await WholeSale.findOne({
@@ -131,6 +134,7 @@ const createWholeSaleOrderIntoDB = async (orderData: IOrder, wholesaleData: IWho
     // Step 3: Create the order
     const order = new Order({
       ...orderData,
+      
       totalAmount, // Use the calculated total amount
     });
     const savedOrder = await order.save({ session });

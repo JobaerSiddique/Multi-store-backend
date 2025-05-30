@@ -1,3 +1,4 @@
+
 import mongoose, { Schema } from "mongoose";
 import { OrderStatus, OrderType, PaymentStatus } from "../types";
 import { IOrder } from "./order.interface";
@@ -21,6 +22,15 @@ const orderSchema = new Schema<IOrder>({
     default: OrderStatus.PENDING 
   },
   notes: String,
+  orderType:{
+    type:String,
+    enum:Object.values(OrderType),
+    required:true
+  },
+  isDeleted:{
+    type:Boolean,
+    default:false
+  },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 }, { 
@@ -31,6 +41,7 @@ const orderSchema = new Schema<IOrder>({
 // Pre-save hook for order number generation
 orderSchema.pre('save', async function (next) {
   if (!this.isNew || this.orderNumber) return next();
+  
 
   try {
     this.orderNumber = await generateOrderNumber(this.orderType);
